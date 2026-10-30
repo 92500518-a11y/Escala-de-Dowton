@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Escala de Downton</title>
+  <style>
+    :root {
+      --bg: #fff7f9;
+      --bg-2: #ffeaf1;
+      --panel: #ffffff;
+      --panel-soft: #fff0f4;
+      --rose-1: #ff8fab;
+      --rose-2: #f65d8c;
+      --rose-3: #d64074;
+      --rose-4: #f9c7d7;
+      --text: #3b1d2f;
+      --muted: #6d4b5f;
+      --line: rgba(214, 64, 116, 0.12);
+      --success: #e76b95;
+      --warning: #ffb46b;
+      --danger: #d94c7d;
+      --shadow: 0 18px 50px rgba(214, 64, 116, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(180deg, var(--bg) 0%, #fff3f7 100%);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { text-decoration: none; color: var(--rose-3); }
+    img { max-width: 100%; }
+
+    .container {
+      width: min(1100px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255, 247, 249, 0.82);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+    }
+
+    .brand {
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      color: var(--rose-3);
+      font-size: 0.94rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    .nav-links a:hover { color: var(--rose-3); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 150px;
+      padding: 12px 22px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--rose-2), var(--rose-3));
+      color: white;
+      font-weight: 700;
+      box-shadow: var(--shadow);
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn.secondary {
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--text);
+      box-shadow: none;
+    }
+
+    .hero { padding: 60px 0 40px; }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.95fr;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(246, 93, 140, 0.08);
+      color: var(--rose-3);
+      border: 1px solid rgba(246, 93, 140, 0.15);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.5rem, 5vw, 4.4rem);
+      line-height: 1.06;
+      letter-spacing: -0.05em;
+      color: var(--text);
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.08rem;
+      max-width: 620px;
+      margin-top: 18px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .stat {
+      background: rgba(255,255,255,0.5);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.5rem;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .hero-card {
+      background: linear-gradient(180deg, #fff7fa 0%, #fff1f6 100%);
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,0.4);
+    }
+
+    .label-mini {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .badge {
+      background: rgba(246, 93, 140, 0.12);
+      color: var(--rose-3);
+      border: 1px solid rgba(246, 93, 140, 0.18);
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    .card-body {
+      padding: 22px 20px 20px;
+    }
+
+    .score-box {
+      background: rgba(255, 143, 171, 0.08);
+      border: 1px solid rgba(246, 93, 140, 0.12);
+      border-radius: 20px;
+      padding: 18px 16px;
+      margin-bottom: 18px;
+    }
+
+    .mini-label {
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.72rem;
+      margin-bottom: 8px;
+    }
+
+    .score {
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--text);
+    }
+
+    .level-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      border: 1px solid rgba(246, 93, 140, 0.2);
+      background: rgba(255, 143, 171, 0.08);
+      color: var(--rose-3);
+    }
+
+    .level-box::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 12px currentColor;
+    }
+
+    section {
+      padding: 28px 0 18px;
+    }
+
+    .section-header {
+      margin-bottom: 18px;
+    }
+
+    .section-header h2 {
+      margin: 0 0 8px;
+      font-size: clamp(1.8rem, 3vw, 2.7rem);
+      letter-spacing: -0.04em;
+    }
+
+    .section-header p {
+      color: var(--muted);
+      margin: 0;
+      max-width: 760px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+      margin-top: 20px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.55);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 22px 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .card h3 {
+      margin: 0 0 12px;
+      font-size: 1.2rem;
+    }
+
+    .card p, .card li {
+      color: var(--muted);
+    }
+
+    .card ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .info-panel {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      margin-top: 18px;
+    }
+
+    .scientific {
+      background: rgba(255,255,255,0.55);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .scientific h3 {
+      margin-top: 0;
+      font-size: 1.5rem;
+    }
+
+    .chip-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .chip {
+      background: rgba(246, 93, 140, 0.08);
+      border: 1px solid rgba(246, 93, 140, 0.15);
+      color: var(--rose-3);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .quote {
+      margin-top: 22px;
+      padding: 18px 20px;
+      border-left: 4px solid var(--rose-2);
+      background: rgba(255, 143, 171, 0.08);
+      border-radius: 12px;
+      font-style: italic;
+      color: var(--text);
+    }
+
+    .levels {
+      background: rgba(255,255,255,0.55);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 22px 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .levels-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+    }
+
+    .levels-table th,
+    .levels-table td {
+      text-align: left;
+      padding: 12px 8px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .levels-table th {
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.72rem;
+    }
+
+    .levels-table td {
+      color: var(--muted);
+    }
+
+    .about {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    .about-card {
+      background: rgba(255,255,255,0.55);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 24px 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .about-card h3 {
+      margin-top: 0;
+      font-size: 1.4rem;
+    }
+
+    .author-box {
+      background: linear-gradient(135deg, rgba(246,93,140,0.12), rgba(255,233,239,0.9));
+      border-radius: 18px;
+      border: 1px solid rgba(246,93,140,0.12);
+      padding: 18px;
+      margin-top: 16px;
+    }
+
+    .author-box strong {
+      display: block;
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .personalized {
+      margin-top: 22px;
+      padding: 18px 20px;
+      border-radius: 18px;
+      background: rgba(246, 93, 140, 0.08);
+      border: 1px solid rgba(246,93,140,0.12);
+      transition: all 0.25s ease;
+    }
+
+    .personalized h3 {
+      margin: 0 0 8px;
+      font-size: 1.2rem;
+    }
+
+    .personalized p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .dynamic-evaluation {
+      margin-top: 26px;
+      background: rgba(255,255,255,0.6);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 24px 20px;
+    }
+
+    .dynamic-grid {
+      display: grid;
+      grid-template-columns: 1fr 0.65fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .questions {
+      display: grid;
+      gap: 18px;
+    }
+
+    .question {
+      background: rgba(255,255,255,0.45);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px 16px;
+    }
+
+    .question h4 {
+      margin: 0 0 12px;
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    .options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(246,93,140,0.04);
+      border: 1px solid rgba(246,93,140,0.1);
+      padding: 8px 12px;
+      border-radius: 12px;
+      color: var(--text);
+      font-size: 0.92rem;
+      cursor: pointer;
+    }
+
+    .option input {
+      accent-color: var(--rose-3);
+      width: 16px;
+      height: 16px;
+    }
+
+    .result-panel {
+      background: linear-gradient(180deg, #fff5f7 0%, #fff0f4 100%);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 20px;
+      position: sticky;
+      top: 90px;
+    }
+
+    .result-panel h3 {
+      margin-top: 0;
+      font-size: 1.3rem;
+    }
+
+    .score-big {
+      font-size: 2.8rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--text);
+      margin: 10px 0;
+    }
+
+    .result-status {
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      margin-top: 8px;
+    }
+
+    .result-description {
+      margin-top: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .botones-eval {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+
+    footer {
+      margin-top: 48px;
+      border-top: 1px solid var(--line);
+      padding: 34px 0 60px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .info-panel,
+      .about,
+      .dynamic-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .result-panel {
+        position: static;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="brand">ESCALA DE DOWNTON</div>
+        <div class="nav-links">
+          <a href="#que-es">Qué es</a>
+          <a href="#cientifico">Científico</a>
+          <a href="#evaluacion">Evaluación</a>
+          <a href="#quien-lo-creo">¿Quién lo creó?</a>
+        </div>
+        <a class="btn" href="#evaluacion">Evaluar ahora</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Herramienta de evaluación</div>
+          <h1>Escala de Downton</h1>
+          <p>
+            La escala de Downton es un instrumento orientado a la observación, valoración y
+            análisis clínico utilizado en enfermería para identificar a las personas que presentan riesgo de sufrir caídas, principalmente en el ámbito hospitalario y en otros entornos de atención sanitaria.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn" href="#evaluacion">Realizar evaluación</a>
+            <a class="btn secondary" href="#cientifico">Ver información</a>
+          </div>
+
+          <div class="stats">
+            <div class="stat">
+              <strong>0–5</strong>
+              <span>Rango posible</span>
+            </div>
+            <div class="stat">
+              <strong>5 niveles</strong>
+              <span>Clasificación</span>
+            </div>
+            <div class="stat">
+              <strong>Valoración clínica</strong>
+              <span>Base metodológica</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="card-top">
+            <span class="label-mini">Evaluación rápida</span>
+            <span class="badge">Actual</span>
+          </div>
+
+          <div class="card-body">
+            <div class="score-box">
+              <div class="mini-label">Puntuación</div>
+              <div class="score" id="scoreValue">0</div>
+            </div>
+
+            <div class="mini-label">Nivel</div>
+            <div class="level-box" id="levelBox">Severidad muy baja</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="que-es">
+      <div class="container">
+        <div class="section-header">
+          <h2>¿Qué es la Escala de Downton?</h2>
+          <p>
+            Es una herramienta de medición diseñada y utilizada en enfermería para identificar el riesgo de caídas de un paciente, considerando factores como antecedentes de caídas, medicamentos, alteraciones sensoriales, estado mental y capacidad para caminar. Su finalidad es ayudar a establecer medidas preventivas para proteger la seguridad del paciente durante su atención.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <article class="card">
+            <h3>Objetivo</h3>
+            <p>
+              Facilitar la identificación de personas con riesgos de caídas, permitiendo a los profesionales de la salud implementar estrategias preventivas y cuidados adecuados para reducir las incidencias de caídas y sus complicaciones asociadas.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Aplicación</h3>
+            <p>
+              La escala se aplica mediante observación directa y recolección de información clínica relevante sobre el paciente, incluyendo antecedentes de caídas, medicación, estado mental, capacidad de deambulación y déficits sensoriales. La evaluación se realiza de manera sistemática, permitiendo la obtención y documentación de una puntuación que refleja el nivel de riesgo de caídas del paciente.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Valor útil</h3>
+            <p>
+              Evalúa los factores de riesgo de caídas para orientar los cuidados preventivos de enfermería. Generalmente, 3 o más puntos indican alto riesgo, por lo que se deben aplicar medidas de seguridad, como mantener la cama baja, facilitar el timbre y ayudar al paciente a caminar.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="cientifico">
+      <div class="container">
+        <div class="section-header">
+          <h2>Información científica</h2>
+          <p>
+            Una escala con valor científico debe estar fundamentada en validez, confiabilidad,
+            análisis estadístico y criterios metodológicos claros.
+          </p>
+        </div>
+
+        <div class="info-panel">
+          <div class="scientific">
+            <h3>Principios metodológicos</h3>
+            <ul>
+              <li>Objetividad: identificar y registrar los factores de riesgo reales del paciente.</li>
+              <li>Sistematicidad: evaluar cada apartado de la escala en orden.</li>
+              <li>Individualización: adaptar los cuidados a las necesidades de cada paciente.</li>
+              <li>Valoración integral: considerar las condiciones físicas, mentales y funcionales del paciente.</li>
+              <li>Prevención: establecer medidas para evitar caídas.</li>
+              <li>Continuidad: repetir la evaluación cuando cambie el estado del paciente.</li>
+              <li>Registro: anotar los resultados obtenidos y los cuidados preventivos realizados.</li>
+            </ul>
+
+            <div class="chip-list">
+              <span class="chip">Riesgo de caídas</span>
+              <span class="chip">Seguridad del paciente</span>
+              <span class="chip">Valoración de enfermería</span>
+              <span class="chip">Prevención de caídas</span>
+              <span class="chip">Factores de riesgo</span>
+              <span class="chip">Interpretación clínica</span>
+              <span class="chip">Cuidados preventivos</span>
+            </div>
+
+            <div class="quote">
+              “Prevenir una caída es proteger la vida, preservar la autonomía y brindar cuidados de enfermería seguros y de calidad.”
+            </div>
+          </div>
+
+          <div class="levels">
+            <h3>Rangos</h3>
+            <table class="levels-table">
+              <thead>
+                <tr>
+                  <th>Puntuación</th>
+                  <th>Clasificación</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>0</td><td>Muy bajo riesgo de caídas</td></tr>
+                <tr><td>1</td><td>Bajo riesgo de caídas</td></tr>
+                <tr><td>2</td><td>Moderado riesgo de caídas</td></tr>
+                <tr><td>3 o más</td><td>Alto riesgo de caídas</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="evaluacion">
+      <div class="container">
+        <div class="section-header">
+          <h2>Realiza la escala</h2>
+          <p>
+            Responde cada ítem según la frecuencia con la que se presenta la situación. La puntuación total
+            se calcula automáticamente y se interpreta según el rango correspondiente.
+          </p>
+        </div>
+
+        <div class="dynamic-evaluation">
+          <div class="dynamic-grid">
+            <div class="questions">
+              <div class="question">
+                <h4>1. ¿Caídas previas?</h4>
+                <div class="options">
+                  <label class="option"><input type="radio" name="q1" value="0" checked> No (0 punto) </label>
+                  <label class="option"><input type="radio" name="q1" value="1"> Sí (1 punto) </label>
+                </div>
+              </div>
+
+              <div class="question">
+                <h4>2. Medicamentos</h4>
+                <div class="options">
+                  <label class="option"><input type="radio" name="q2" value="0" checked> Ninguno (0 puntos) </label>
+                  <label class="option"><input type="radio" name="q2" value="1"> Tranquilizantes/Sedantes (1 punto) </label>
+                  <label class="option"><input type="radio" name="q2" value="1"> Diuréticos (1 punto) </label>
+                  <label class="option"><input type="radio" name="q2" value="1"> Hipotensores no diuréticos (1 punto) </label>
+                  <label class="option"><input type="radio" name="q2" value="1"> Antiparkinsonianos (1 punto) </label>
+                  <label class="option"><input type="radio" name="q2" value="0"> Otros medicamentos (0 puntos) </label>
+                </div>
+              </div>
+
+              <div class="question">
+                <h4>3. Déficits sensoriales</h4>
+                <div class="options">
+                  <label class="option"><input type="radio" name="q3" value="0" checked> Ninguno (0 puntos) </label>
+                  <label class="option"><input type="radio" name="q3" value="1"> Alteraciones visuales (1 punto) </label>
+                  <label class="option"><input type="radio" name="q3" value="1"> Alteraciones auditivas (1 punto) </label>
+                  <label class="option"><input type="radio" name="q3" value="1"> Extremidades/Amputaciones/Ictus (1 punto) </label>
+                </div>
+              </div>
+
+              <div class="question">
+                <h4>4. Estado mental</h4>
+                <div class="options">
+                  <label class="option"><input type="radio" name="q4" value="0" checked> Orientado (0 punto)</label>
+                  <label class="option"><input type="radio" name="q4" value="1"> Desorientado (1 punto)</label>
+                </div>
+              </div>
+
+              <div class="question">
+                <h4>5. Deambulación</h4>
+                <div class="options">
+                  <label class="option"><input type="radio" name="q5" value="0" checked> Normal (0 puntos)</label>
+                  <label class="option"><input type="radio" name="q5" value="1"> Segura con ayuda (1 punto) </label>
+                  <label class="option"><input type="radio" name="q5" value="1"> Insegura con ayuda/sin ayuda (1 punto) </label>
+                  <label class="option"><input type="radio" name="q5" value="1"> Imposible (1 punto) </label>
+                </div>
+              </div>
+
+              <div class="botones-eval">
+                <button type="button" class="btn" id="btnCalcular">Calcular puntuación</button>
+                <button type="button" class="btn secondary" id="btnReset">Reiniciar</button>
+              </div>
+            </div>
+
+            <aside class="result-panel">
+              <h3>Resultado</h3>
+              <div class="score-big" id="totalScore">0</div>
+              <div id="resultStatus" class="result-status" style="background: rgba(246,93,140,0.08); color: var(--rose-3); border: 1px solid rgba(246,93,140,0.15);">
+                Sin evaluar
+              </div>
+              <div class="result-description" id="resultDescription">
+                Aún no se ha realizado la evaluación. Selecciona las respuestas y presiona “Calcular puntuación”.
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="interpretacion">
+      <div class="container">
+        <div class="section-header">
+          <h2>Interpretación personalizada</h2>
+          <p>
+            La clave no es solo la puntuación, sino la forma en que se contextualiza con la historia,
+            la conducta y la situación actual.
+          </p>
+        </div>
+
+        <div class="personalized" id="personalizedBox">
+          <h3 id="personalizedTitle">Sigue observando</h3>
+          <p id="personalizedText">
+            Cuando la puntuación es baja, el nivel de alerta es menor; sin embargo, la interpretación
+            siempre debe hacerse con atención al contexto y a la evolución de la situación.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <article class="card">
+            <h3>0</h3>
+            <p>Muy bajo. Se observa una ausencia clara de indicadores relevantes. Mantener vigilancia y seguimiento preventivo.</p>
+          </article>
+
+          <article class="card">
+            <h3>1</h3>
+            <p>Bajo. Se presentan leves señales. El estado del paciente es estable y seguro. Requiere reforzar cuidados generales de enfermería y mantener el orden básico.</p>
+          </article>
+
+          <article class="card">
+            <h3>2</h3>
+            <p>Moderado. Se observan varios factores de riesgo y se recomienda estrechar la vigilancia y reforzar medidas preventivas.</p>
+          </article>
+
+          <article class="card">
+            <h3>3 o más</h3>
+            <p>Alto. Se presentan indicadores significativos. El paciente tiene una probabilidad muy elevada de sufrir una lesión por caída. Exige activar el protocolo inmediato de prevención de caídas.</p>
+          </article>
+        </div>
+
+        <div class="card" style="margin-top: 22px;">
+          <h3>Recomendación general</h3>
+          <p>La interpretación debe combinar la puntuación con la historia personal, la situación y la dimensión evaluada.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="quien-lo-creo">
+      <div class="container">
+        <div class="section-header">
+          <h2>¿Quién lo creó?</h2>
+          <p>
+            La escala de Downton se atribuye a Joanna H. Downton, médica geriatra y se relaciona con su obra "Falls in the Elderly", publicada en 1993. Se desarrolló como una herramienta para identificar factores asociados con las caídas, especialmente en adultos mayores, y orientar las medidas de prevención en la atención sanitaria.
+          </p>
+        </div>
+
+        <div class="about">
+          <div class="about-card">
+            <h3>Autoría y desarrollo</h3>
+            <p>
+              La escala se atribuye a J. H. Downton. Su diseño reúne distintos factores que pueden aumentar el riesgo de caídas. Con el tiempo, se ha utilizado en entornos clínicos para apoyar la valoración de enfermería.
+            </p>
+
+            <div class="author-box">
+              <strong>Referencia general</strong>
+              <p>
+                La información sobre la escala puede respaldarse con libros y artículos científicos que describen su origen, aplicación y utilidad clínica. Una fuente importante es el libro original de Downton, además de investigaciones que analizan la precisión de la escala para predecir caídas.
+              </p>
+            </div>
+          </div>
+
+          <div class="about-card">
+            <h3>Cómo se presenta en una página institucional</h3>
+            <ul>
+              <li>Escala de Downton</li>
+              <li>Diana Karen Herrera de Rosas</li>
+              <li>Universidad de Oriente</li>
+              <li>Octubre 2026</li>
+              <li>Referencias:
+                <ul>
+                  <li>Aranda-Gallardo, M., et al. (2017). Diagnostic validity of the STRATIFY and Downton instruments for evaluating the risk of falls by hospitalised acute-care patients: A multicentre longitudinal study. BMC Health Services Research, 17, 277.</li>
+                  <li>Downton, J. H. (1993). Falls in the Elderly. Edward Arnold.</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 Escala de Downton · Página informativa con enfoque científico
+  </footer>
+
+  <script>
+    const scoreValue = document.getElementById("scoreValue");
+    const levelBox = document.getElementById("levelBox");
+    const totalScore = document.getElementById("totalScore");
+    const resultStatus = document.getElementById("resultStatus");
+    const resultDescription = document.getElementById("resultDescription");
+    const personalizedTitle = document.getElementById("personalizedTitle");
+    const personalizedText = document.getElementById("personalizedText");
+
+    function getInterpretation(score) {
+      if (score <= 0) {
+        return {
+          label: "Severidad muy baja",
+          status: "Muy baja",
+          color: "#d98aa3",
+          background: "rgba(217,138,163,0.14)",
+          border: "rgba(217,138,163,0.25)",
+          title: "Estado muy estable",
+          text: "Tu puntuación es baja y sugiere que no se observan señales relevantes de intensidad elevada. Mantén hábitos saludables y continúa con seguimiento preventivo si lo consideras necesario."
+        };
+      } else if (score === 1) {
+        return {
+          label: "Severidad baja",
+          status: "Baja",
+          color: "#e7779f",
+          background: "rgba(231,119,159,0.12)",
+          border: "rgba(231,119,159,0.22)",
+          title: "Se recomienda seguimiento ligero",
+          text: "Se observa una presencia leve de indicadores. Puedes reforzar hábitos de descanso, autocuidado y revisión de tu rutina para sostener un equilibrio saludable."
+        };
+      } else if (score === 2) {
+        return {
+          label: "Severidad moderada",
+          status: "Moderada",
+          color: "#d86d9b",
+          background: "rgba(216,109,155,0.12)",
+          border: "rgba(216,109,155,0.2)",
+          title: "Se requiere vigilancia",
+          text: "La puntuación indica una situación de riesgo media. Es recomendable reforzar las medidas preventivas y revisar los factores que pueden empeorar la situación."
+        };
+      } else {
+        return {
+          label: "Severidad alta",
+          status: "Alta",
+          color: "#b9466d",
+          background: "rgba(185,70,109,0.12)",
+          border: "rgba(185,70,109,0.2)",
+          title: "Se requiere atención",
+          text: "La puntuación actual refleja un nivel elevado que merece atención más activa. Se recomienda revisar el entorno, reducir factores que lo agravan y valorar apoyo profesional."
+        };
+      }
+    }
+
+    function updateStaticExample() {
+      const value = 0;
+      const interpretation = getInterpretation(value);
+
+      scoreValue.textContent = value;
+      levelBox.textContent = interpretation.label;
+      levelBox.style.color = interpretation.color;
+      levelBox.style.borderColor = interpretation.border;
+      levelBox.style.background = interpretation.background;
+    }
+
+    function calculateScore() {
+      let total = 0;
+      const allInputs = document.querySelectorAll('input[type="radio"]:checked');
+
+      allInputs.forEach(input => {
+        total += Number(input.value);
+      });
+
+      const interpretation = getInterpretation(total);
+
+      totalScore.textContent = total;
+      resultStatus.textContent = interpretation.status;
+      resultStatus.style.color = interpretation.color;
+      resultStatus.style.background = interpretation.background;
+      resultStatus.style.border = `1px solid ${interpretation.border}`;
+
+      resultDescription.textContent =
+        "La puntuación total indica una " + interpretation.label.toLowerCase() +
+        ". " + interpretation.text;
+
+      personalizedTitle.textContent = interpretation.title;
+      personalizedText.textContent = interpretation.text;
+
+      scoreValue.textContent = total;
+      levelBox.textContent = interpretation.label;
+      levelBox.style.color = interpretation.color;
+      levelBox.style.background = interpretation.background;
+      levelBox.style.borderColor = interpretation.border;
+    }
+
+    document.getElementById("btnCalcular").addEventListener("click", calculateScore);
+
+    document.getElementById("btnReset").addEventListener("click", () => {
+      const radios = document.querySelectorAll('input[type="radio"]');
+      radios.forEach(radio => {
+        if (radio.value === "0" && radio.name) {
+          radio.checked = true;
+        }
+      });
+
+      totalScore.textContent = "0";
+      resultStatus.textContent = "Sin evaluar";
+      resultStatus.style.color = "var(--rose-3)";
+      resultStatus.style.background = "rgba(246,93,140,0.08)";
+      resultStatus.style.border = "1px solid rgba(246,93,140,0.15)";
+      resultDescription.textContent = "Aún no se ha realizado la evaluación. Selecciona las respuestas y presiona “Calcular puntuación”.";
+      personalizedTitle.textContent = "Sigue observando";
+      personalizedText.textContent = "Cuando la puntuación es baja, el nivel de alerta es menor; sin embargo, la interpretación siempre debe hacerse con atención al contexto y a la evolución de la situación.";
+
+      scoreValue.textContent = "0";
+      levelBox.textContent = "Severidad muy baja";
+      levelBox.style.color = "var(--rose-3)";
+      levelBox.style.background = "rgba(255, 143, 171, 0.08)";
+      levelBox.style.borderColor = "rgba(246, 93, 140, 0.2)";
+    });
+
+    updateStaticExample();
+  </script>
+</body>
+</html>
